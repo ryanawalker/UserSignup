@@ -10,3 +10,11 @@ else
 {
     <p>Welcome, @Model.Username!</p>
 }
+
+<p>Users:</p>
+<ul>
+    @foreach (var user in ViewBag.users)
+    {
+        <li><a asp-area="" asp-controller="User" asp-action="Details" asp-route-userId="@user.UserId">@user.Username</a> - joined @user.CreateDate</li>
+    }
+</ul>
