@@ -1,31 +1,31 @@
-﻿@model UserSignup.Models.User
+﻿@model UserSignup.ViewModels.AddUserViewModel
 <br />
-<form method="post" action="Add">
-    <p>@ViewBag.PasswordError @ViewBag.UsernameError</p>
+<form asp-controller="User" asp-action="Add" method="post">
+    <div asp-validation-summary="All"></div>
 
     <div class="form-element">
-        <label>UserName</label>
-        <input name="Username" value="@Model.Username" type="text" />
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
     </div>
     <div class="form-element">
-        <label>Email</label>
-        <input name="Email" value="@Model.Email" type="email" />
+        <label asp-for="Email"></label>
+        <input asp-for="Email"  />
     </div>
     <div class="form-element">
-        <label>Password</label>
-        <input name="Password" value="@Model.Password" type="password" />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
     </div>
     <div class="form-element">
-        <label>Verify Password</label>
-        <input name="verify" type="password" />
+        <label asp-for="Verify"></label>
+        <input asp-for="Verify" type="password" />
     </div>
     <div class="form-element">
-        <label>Location</label>
-        <input name="Location" value="@Model.Location" type="text" />
+        <label asp-for="Location">Location</label>
+        <input asp-for="Location"  />
     </div>
     <div class="form-element">
-        <label>Birthday</label>
-        <input name="Birthday" value="@Model.Birthday" type="date" />
+        <label asp-for="Birthday"></label>
+        <input asp-for="Birthday" />
     </div>
 
     <input type="submit" value="Submit" />

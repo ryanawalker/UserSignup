@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UserSignup.Models;
+using UserSignup.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,24 +35,28 @@ namespace UserSignup.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View(new User());
+            AddUserViewModel addUserViewModel = new AddUserViewModel();
+            return View(addUserViewModel);
         }
 
         [HttpPost]
-        public IActionResult Add(User user, string verify)
+        public IActionResult Add(AddUserViewModel addUserViewModel)
         {
-            if (user.Password == verify && !String.IsNullOrEmpty(user.Username))
+            if (ModelState.IsValid)
             {
-                UserData.AddUser(user);
-                // return RedirectToAction("Index", user);
-                return RedirectToAction("Index", new { Username = user.Username } );
+                User newUser = new User
+                {
+                    Username = addUserViewModel.Username,
+                    Birthday = addUserViewModel.Birthday,
+                    Location = addUserViewModel.Location,
+                    Email = addUserViewModel.Email,
+                    Password = addUserViewModel.Password,
+                };
+                UserData.AddUser(newUser);
+                return RedirectToAction("Index", new { Username = newUser.Username });
             }
-            else
-            {
-                ViewBag.PasswordError = user.Password != verify ? "Your passwords must match" : "";
-                ViewBag.UsernameError = String.IsNullOrEmpty(user.Username) ? "You must enter a username" : "";
-                return View(user);
-            }
+
+            return View(addUserViewModel);
         }
     }
 }
